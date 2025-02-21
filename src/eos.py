@@ -15,9 +15,4 @@ def polytropic_eps(pressure, gamma):
     if (pressure < 0):
         return 0
     
-    print(f"pressure: {pressure}")
-    print(f"k: {K}")
-    print(f"GAMMA: {GAMMA}")
     return math.pow(pressure / K, 1./gamma)
-
-    # return 1
