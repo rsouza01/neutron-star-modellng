@@ -5,6 +5,8 @@ from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 import json
 
+import eos as eos
+
 OUTPUT_FOLDER="../output"
 
 # Define the system of differential equations
@@ -49,7 +51,9 @@ def rho(p):
     Returns:
         The energy density at the given pressure.
     """
-    return 1 # constant
+    # return 1 # constant
+    return eos.energy_density(p)
+
 
 # Event function for stop condition
 def event(r, y):
@@ -84,6 +88,8 @@ def plot_results(r_span, sol):
     plt.figure(figsize=(8, 6))
     plt.plot(r_eval, y[0], label='P(r)')
     plt.plot(r_eval, y[1], label='m(r)')
+    # add a vertical line to plt at y=5
+    
     plt.xlabel('Radius (r)')
     plt.ylabel('Solutions (P, m)')
     plt.title('Stellar toy model')
@@ -118,6 +124,7 @@ if __name__ == "__main__":
 
     result = {
         "radius": sol.t[-1], 
+        "pressure": sol.y[0][-1],
         "mass": sol.y[1][-1]
         }
 
