@@ -8,7 +8,12 @@ import scipy.constants as phys_const
 
 GAMMA = 3./2.
 K = 1
- 
+
+mu = 1 # Pure hidrogen
+mH = 1.67e-27 # Mass of hidrogen
+k_B = 1.38e-23 # Boltzmann constant
+
+
 def gradients(m, P, r):
     dPdr = -m * phys_const.G * rho(P)/(r**2. + 1e-20)
     dmdr = 4. * math.pi * r**2.0 * rho(P)
@@ -29,9 +34,14 @@ def rho(p):
 
 
 def energy_density(pressure):
-    return polytropic_eps(pressure, GAMMA)
+    return ideal_gas_eos(pressure, GAMMA)
+    # return polytropic_eos(pressure, GAMMA)
 
-def polytropic_eps(pressure, gamma):
+def ideal_gas_eos(pressure, temperature):
+    return (mu * mH * pressure) / (k_B * temperature)
+
+
+def polytropic_eos(pressure, gamma):
     if (pressure < 0):
         return 0
     
