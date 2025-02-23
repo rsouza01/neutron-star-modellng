@@ -24,38 +24,10 @@ def system(r, y):
         A NumPy array containing the derivatives of the two dependent variables (dy[0]/dt and dy[1]/dt).
     """
  
-    # y1 = y[0] # dPdr
-    # y2 = y[1] # dMdr
-    # Example system: 
-    # dy1/dt = -y1 + y2 
-    # dy2/dt = y1 - 2*y2
-    # dydt = [-y1 + y2, y1 - 2*y2]  # Replace with your actual equations
-
     P = y[0]
     m = y[1]
 
-    dPdr = -m * phys_const.G * rho(P)/(r**2. + 1e-20)
-    dmdr = 4. * math.PI * r**2.0 * rho(P)
-
-    dydt = [
-        dPdr,
-        dmdr
-    ]
-    return dydt
-
-def rho(p):
-    """
-    Energy Density of a neutron star at a given pressure.
-
-    Args:
-        p: Pressure at a given value of r.
-
-    Returns:
-        The energy density at the given pressure.
-    """
-    # return 1 # constant
-    return eos.energy_density(p)
-
+    return eos.gradients(P, m, r)
 
 # Event function for stop condition
 def event(r, y):
