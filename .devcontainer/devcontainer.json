@@ -20,7 +20,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "alias ll='ls -alF'",
+	"postCreateCommand": "bash .devcontainer/setup.sh",
 
 	// Configure tool-specific properties.
 	// "customizations": {},
