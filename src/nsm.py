@@ -1,9 +1,11 @@
-#c#!/usr/bin/env python3
+#!/usr/bin/env python3
 
 import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 import json
+import math
+import scipy.constants as phys_const
 
 import eos as eos
 
@@ -32,8 +34,8 @@ def system(r, y):
     P = y[0]
     m = y[1]
 
-    dPdr = -m * rho(P)/(r**2 + 1e-20)
-    dmdr = r**2.0 * rho(P)
+    dPdr = -m * phys_const.G * rho(P)/(r**2. + 1e-20)
+    dmdr = 4. * math.PI * r**2.0 * rho(P)
 
     dydt = [
         dPdr,
