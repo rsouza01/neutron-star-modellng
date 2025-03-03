@@ -94,47 +94,51 @@ def solve_stellar_structure(M_total, L_total, kappa_0, kappa_power, epsilon_0, e
 
     return sol
 
-# Example usage:
-M_total = 1.989e30  # Solar mass (kg)
-L_total = 3.828e26  # Solar luminosity (W)
-kappa_0 = 1.0  # Example opacity coefficient
-kappa_power = -3.5 # Kramers opacity power
-epsilon_0 = 1e-26 # Example energy generation coefficient
-epsilon_power = 4.0 # pp chain power
-mu = 0.6  # Mean molecular weight (example)
-G = 6.674e-11  # Gravitational constant (N m^2/kg^2)
-R_gas = 8.314  # Ideal gas constant (J/mol K)
+def plot():
+    # Plotting the results:
+    plt.figure(figsize=(10, 6))
+    plt.plot(sol.t, sol.y[0], label='Pressure (P)')
+    plt.plot(sol.t, sol.y[1], label='Mass (M)')
+    plt.plot(sol.t, sol.y[2], label='Luminosity (L)')
+    plt.plot(sol.t, sol.y[3], label='Temperature (T)')
+    plt.xlabel('Radius (r)')
+    plt.ylabel('Value')
+    plt.title('Stellar Structure')
+    plt.legend()
+    plt.grid(True)
+    # plt.show()
+    plt.savefig(f"nsm_ideal_gas_results.png")
 
-R_initial = 1e-3  # Initial radius (m)
-P_initial = 1e16  # Initial pressure (Pa)
-T_initial = 1e7   # Initial temperature (K)
-r_max = 7e8     #Maximum radius to integrate to, approximately solar radius.
+    #calculate density.
+    rho = (mu * sol.y[0]) / (R_gas * sol.y[3])
+    plt.figure(figsize=(10, 6))
+    plt.plot(sol.t, rho, label='Density (rho)')
+    plt.xlabel('Radius (r)')
+    plt.ylabel('Density (kg/m^3)')
+    plt.title('Stellar Density')
+    plt.legend()
+    plt.grid(True)
+    # plt.show()
 
-sol = solve_stellar_structure(M_total, L_total, kappa_0, kappa_power, epsilon_0, epsilon_power, mu, G, R_gas, R_initial, P_initial, T_initial, r_max)
+    plt.savefig(f"nsm_ideal_gas_density.png")
 
-# Plotting the results:
-plt.figure(figsize=(10, 6))
-plt.plot(sol.t, sol.y[0], label='Pressure (P)')
-plt.plot(sol.t, sol.y[1], label='Mass (M)')
-plt.plot(sol.t, sol.y[2], label='Luminosity (L)')
-plt.plot(sol.t, sol.y[3], label='Temperature (T)')
-plt.xlabel('Radius (r)')
-plt.ylabel('Value')
-plt.title('Stellar Structure')
-plt.legend()
-plt.grid(True)
-# plt.show()
-plt.savefig(f"nsm_ideal_gas_results.png")
+if __name__ == "__main__":
 
-#calculate density.
-rho = (mu * sol.y[0]) / (R_gas * sol.y[3])
-plt.figure(figsize=(10, 6))
-plt.plot(sol.t, rho, label='Density (rho)')
-plt.xlabel('Radius (r)')
-plt.ylabel('Density (kg/m^3)')
-plt.title('Stellar Density')
-plt.legend()
-plt.grid(True)
-# plt.show()
+    # Example usage:
+    M_total = 1.989e30  # Solar mass (kg)
+    L_total = 3.828e26  # Solar luminosity (W)
+    kappa_0 = 1.0  # Example opacity coefficient
+    kappa_power = -3.5 # Kramers opacity power
+    epsilon_0 = 1e-26 # Example energy generation coefficient
+    epsilon_power = 4.0 # pp chain power
+    mu = 0.6  # Mean molecular weight (example)
+    G = 6.674e-11  # Gravitational constant (N m^2/kg^2)
+    R_gas = 8.314  # Ideal gas constant (J/mol K)
 
-plt.savefig(f"nsm_ideal_gas_density.png")
+    R_initial = 1e-3  # Initial radius (m)
+    P_initial = 1e16  # Initial pressure (Pa)
+    T_initial = 1e7   # Initial temperature (K)
+    r_max = 7e8     #Maximum radius to integrate to, approximately solar radius.
+
+    sol = solve_stellar_structure(M_total, L_total, kappa_0, kappa_power, epsilon_0, epsilon_power, mu, G, R_gas, R_initial, P_initial, T_initial, r_max)
+
