@@ -1,0 +1,6 @@
+astropy
+astroquery>=0.4.8.dev9474
+IPython
+numpy
+pillow
+matplotlib
